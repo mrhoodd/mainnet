@@ -2,7 +2,7 @@
 
 ## [Website](https://gitopia.com/) | [Discord](https://discord.com/invite/aqsKW3hUHD) | [Twitter](https://twitter.com/gitopiaDAO) | :satellite:[Explorer](https://explorer.moonbridge.team/gitopia)
 
-**Chain ID:** gitopia | **Latest Version:** v3.0.1 | **Custom Port:** 154
+**Chain ID:** gitopia | **Latest Version:** v3.3.0 | **Custom Port:** 154
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -42,7 +42,7 @@ source $HOME/.bash_profile
 cd $HOME
 git clone https://github.com/gitopia/gitopia.git
 cd gitopia
-git checkout v3.0.1
+git checkout v3.3.0
 make install
 gitopiad version --long | grep -e commit -e version
 ```
