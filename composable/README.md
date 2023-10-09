@@ -6,7 +6,7 @@
 - API: https://composable.api.moonbridge.team
 - RPC: https://composable.rpc.moonbridge.team
 
-**Chain ID:** centauri-1 | **Latest Version:**	v5.1.0 | **Custom Port:** 150
+**Chain ID:** centauri-1 | **Latest Version:** v5.2.2-client-fix | **Custom Port:** 150
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -46,7 +46,7 @@ source $HOME/.bash_profile
 cd $HOME
 git clone https://github.com/notional-labs/composable-centauri.git
 cd composable-centauri
-git checkout v5.1.0
+git checkout v5.2.2-client-fix
 make install
 centaurid version --long | grep -e commit -e version
 ```
