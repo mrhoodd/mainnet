@@ -27,7 +27,7 @@ sudo apt install curl wget build-essential git jq tar pkg-config libssl-dev libl
 
 ```bash
 cd $HOME
-version="1.20.5"
+version="1.21.4"
 wget "https://golang.org/dl/go$version.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go$version.linux-amd64.tar.gz"
@@ -57,8 +57,8 @@ realio-networkd config keyring-backend file
 realio-networkd init $MONIKER --chain-id realionetwork_3301-1
 
 # Download genesis and addrbook
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Realio/genesis.json > $HOME/.realio-network/config/genesis.json
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Realio/addrbook.json > $HOME/.realio-network/config/addrbook.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/realio/genesis.json > $HOME/.realio-network/config/genesis.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/realio/addrbook.json > $HOME/.realio-network/config/addrbook.json
 
 # Set seeds and peers
 SEEDS=""

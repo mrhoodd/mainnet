@@ -58,9 +58,8 @@ empowerd config keyring-backend os
 empowerd init $MONIKER --chain-id empowerchain-1
 
 # Download genesis and addrbook
-URL=https://github.com/EmpowerPlastic/empowerchain/raw/main/mainnet/empowerchain-1/genesis.tar.gz
-curl -L $URL | tar -xz -C $HOME/.empowerchain/config/
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Empower/addrbook.json > $HOME/.empowerchain/config/addrbook.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/empower/genesis.json > $HOME/.empowerchain/config/genesis.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/empower/addrbook.json > $HOME/.empowerchain/config/addrbook.json
 
 # Set seeds and peers
 SEEDS=""

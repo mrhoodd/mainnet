@@ -3,8 +3,9 @@
 ## [Website](https://www.sourceprotocol.io/) | [Twitter](https://twitter.com/sourceprotocol_) | [Discord](https://discord.gg/zj8xxUCeZQ) | :satellite:[Explorer](https://explorer.moonbridge.team/source)
 
 ## Public endpoints
-- API: https://source.api.moonbridge.team
-- RPC: https://source.rpc.moonbridge.team
+
+- API: <https://source.api.moonbridge.team>
+- RPC: <https://source.rpc.moonbridge.team>
 
 **Chain ID:** source-1 | **Latest Version:** v3.0.0 | **Custom Port:** 155
 
@@ -31,7 +32,7 @@ sudo apt install curl wget build-essential git jq tar pkg-config libssl-dev libl
 
 ```bash
 cd $HOME
-version="1.20.5"
+version="1.21.4"
 wget "https://golang.org/dl/go$version.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go$version.linux-amd64.tar.gz"
@@ -58,12 +59,12 @@ sourced version --long | grep -e commit -e version
 # Set node configuration
 sourced config node tcp://localhost:${SOURCE_PORT}57
 sourced config chain-id source-1
-sourced config keyring-backend os
+sourced config keyring-backend file
 sourced init $MONIKER --chain-id source-1
 
 # Download genesis and addrbook
-curl -s  https://raw.githubusercontent.com/Source-Protocol-Cosmos/mainnet/master/source-1/genesis.json > ~/.source/config/genesis.json
-curl -Ls https://moonbridge.team/snapshots/mainnet/source/addrbook.json > $HOME/.source/config/addrbook.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/source/genesis.json > $HOME/.source/config/genesis.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/source/addrbook.json > $HOME/.source/config/addrbook.json
 
 # Set seeds and peers
 SEEDS=""
@@ -79,13 +80,13 @@ sed -i 's|^pruning-keep-recent  *=.*|pruning-keep-recent = "100"|' $HOME/.source
 sed -i 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' $HOME/.source/config/app.toml
 sed -i 's|^pruning-interval *=.*|pruning-interval = "10"|' $HOME/.source/config/app.toml
 
-# Disable indexer (optional)
+# Disable indexer
 sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.source/config/config.toml
 
-## Enable Prometheus (optional)
+# Enable Prometheus
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.source/config/config.toml
 
-## Setting custom ports
+# Setting custom ports
 sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${SOURCE_PORT}58\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${SOURCE_PORT}57\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${SOURCE_PORT}60\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${SOURCE_PORT}56\"%; s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${SOURCE_PORT}56\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${SOURCE_PORT}66\"%" $HOME/.source/config/config.toml
 sed -i -e "s%:1317%:${SOURCE_PORT}17%g; s%:8080%:${SOURCE_PORT}80%g; s%:9090%:${SOURCE_PORT}90%g; s%:9091%:${SOURCE_PORT}91%g; s%:8545%:${SOURCE_PORT}45%g; s%:8546%:${SOURCE_PORT}46%g; s%:6065%:${SOURCE_PORT}65%g" $HOME/.source/config/app.toml
 ```

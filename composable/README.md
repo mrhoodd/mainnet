@@ -3,10 +3,11 @@
 ## [Website](https://www.composable.finance/) | [Discord](https://discord.gg/composable) | [Twitter](https://twitter.com/ComposableFin) | :satellite:[Explorer](https://explorer.moonbridge.team/Centauri)
 
 ## Public endpoints
-- API: https://composable.api.moonbridge.team
-- RPC: https://composable.rpc.moonbridge.team
 
-**Chain ID:** centauri-1 | **Latest Version:** v5.2.2-client-fix | **Custom Port:** 150
+- API: <https://composable.api.moonbridge.team>
+- RPC: <https://composable.rpc.moonbridge.team>
+
+**Chain ID:** centauri-1 | **Latest Version:** v6.3.1 | **Custom Port:** 150
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -31,7 +32,7 @@ sudo apt install curl wget build-essential git jq tar pkg-config libssl-dev libl
 
 ```bash
 cd $HOME
-version="1.20.5"
+version="1.21.4"
 wget "https://golang.org/dl/go$version.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go$version.linux-amd64.tar.gz"
@@ -46,7 +47,7 @@ source $HOME/.bash_profile
 cd $HOME
 git clone https://github.com/notional-labs/composable-centauri.git
 cd composable-centauri
-git checkout v5.2.2-client-fix
+git checkout v6.3.1
 make install
 centaurid version --long | grep -e commit -e version
 ```
@@ -57,12 +58,12 @@ centaurid version --long | grep -e commit -e version
 # Set node configuration
 centaurid config node tcp://localhost:${BANKSY_PORT}57
 centaurid config chain-id centauri-1
-centaurid config keyring-backend os
+centaurid config keyring-backend file
 centaurid init $MONIKER --chain-id centauri-1
 
 # Download genesis and addrbook
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Composable/genesis.json > $HOME/.banksy/config/genesis.json
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Composable/addrbook.json > $HOME/.banksy/config/addrbook.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/composable/genesis.json > $HOME/.banksy/config/genesis.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/composable/addrbook.json > $HOME/.banksy/config/addrbook.json
 
 # Set seeds and peers
 SEEDS=""
@@ -73,10 +74,10 @@ sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persisten
 sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0ppica\"|" $HOME/.banksy/config/app.toml
 
 # Setting pruning
-sed -i 's|^pruning *=.*|pruning = "custom"|' $HOME/.banksy/config/app.toml
-sed -i 's|^pruning-keep-recent  *=.*|pruning-keep-recent = "100"|' $HOME/.banksy/config/app.toml
-sed -i 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' $HOME/.banksy/config/app.toml
-sed -i 's|^pruning-interval *=.*|pruning-interval = "10"|' $HOME/.banksy/config/app.toml
+sed -i -e 's|^pruning *=.*|pruning = "custom"|' $HOME/.banksy/config/app.toml
+sed -i -e 's|^pruning-keep-recent  *=.*|pruning-keep-recent = "100"|' $HOME/.banksy/config/app.toml
+sed -i -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' $HOME/.banksy/config/app.toml
+sed -i -e 's|^pruning-interval *=.*|pruning-interval = "10"|' $HOME/.banksy/config/app.toml
 
 # Disable indexer
 sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.banksy/config/config.toml

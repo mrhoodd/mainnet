@@ -27,7 +27,7 @@ sudo apt install curl wget build-essential git jq tar pkg-config libssl-dev libl
 
 ```bash
 cd $HOME
-version="1.20.5"
+version="1.21.4"
 wget "https://golang.org/dl/go$version.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go$version.linux-amd64.tar.gz"
@@ -57,11 +57,8 @@ gitopiad config keyring-backend file
 gitopiad init $MONIKER --chain-id gitopia
 
 # Download genesis and addrbook
-curl -Ls https://github.com/gitopia/mainnet/raw/master/genesis.tar.gz > $HOME/genesis.tar.gz
-tar -xzf $HOME/genesis.tar.gz
-mv genesis.json $HOME/.gitopia/config/genesis.json
-rm $HOME/genesis.tar.gz
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Gitopia/addrbook.json > $HOME/.gitopia/config/addrbook.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/gitopia/genesis.json > $HOME/.gitopia/config/genesis.json
+curl -Ls https://snapshots.moonbridge.team/mainnet/gitopia/addrbook.json > $HOME/.gitopia/config/addrbook.json
 
 # Set seeds and peers
 SEEDS=""
@@ -77,13 +74,13 @@ sed -i 's|^pruning-keep-recent  *=.*|pruning-keep-recent = "100"|' $HOME/.gitopi
 sed -i 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' $HOME/.gitopia/config/app.toml
 sed -i 's|^pruning-interval *=.*|pruning-interval = "10"|' $HOME/.gitopia/config/app.toml
 
-# Disable indexer (optional)
+# Disable indexer
 sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.gitopia/config/config.toml
 
-## Enable Prometheus (optional)
+# Enable Prometheus
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.gitopia/config/config.toml
 
-## Setting custom ports
+# Setting custom ports
 sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${GITOPIA_PORT}58\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${GITOPIA_PORT}57\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${GITOPIA_PORT}60\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${GITOPIA_PORT}56\"%; s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${GITOPIA_PORT}56\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${GITOPIA_PORT}66\"%" $HOME/.gitopia/config/config.toml
 sed -i -e "s%:1317%:${GITOPIA_PORT}17%g; s%:8080%:${GITOPIA_PORT}80%g; s%:9090%:${GITOPIA_PORT}90%g; s%:9091%:${GITOPIA_PORT}91%g; s%:8545%:${GITOPIA_PORT}45%g; s%:8546%:${GITOPIA_PORT}46%g; s%:6065%:${GITOPIA_PORT}65%g" $HOME/.gitopia/config/app.toml
 ```
